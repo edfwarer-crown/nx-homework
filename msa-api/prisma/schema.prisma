@@ -1,0 +1,283 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["metrics"]
+}
+
+generator dto {
+  provider                        = "prisma-generator-nestjs-dto"
+  output                          = "../libs/entity/src/prisma"
+  entitySuffix                    = "Entity"
+  exportRelationModifierClasses   = "true"
+  updateDtoPrefix                 = "Update"
+  outputType                      = "class"
+  prettier                        = "true"
+  definiteAssignmentAssertion     = "false"
+  entityPrefix                    = ""
+  outputApiPropertyType           = "true"
+  requiredResponseApiProperty     = "true"
+  usePartialTypeProperty          = "true"
+  classValidation                 = "true"
+  generateFileTypes               = "all"
+  flatResourceStructure           = "false"
+  noDependencies                  = "false"
+  fileNamingStyle                 = "kebab"
+  outputToNestJsResourceStructure = "true"
+  reExport                        = "true"
+  createDtoPrefix                 = "Create"
+  dtoSuffix                       = "Dto"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  Int       @id @default(autoincrement()) @db.UnsignedInt
+  username            String    @unique(map: "UK_USER__USERNAME") @db.VarChar(100)
+  fullname            String    @db.VarChar(255)
+  nickname            String?   @db.VarChar(255)
+  language            String?   @default("en") @db.VarChar(10)
+  password            String    @db.VarChar(255)
+  birthday            DateTime? @db.DateTime(0)
+  email               String?   @unique(map: "UK_USER__EMAIL") @db.VarChar(100)
+  lastPassword        String?   @map("last_password") @db.VarChar(255)
+  cellNumber          String?   @map("cell_number") @db.VarChar(20)
+  profileImageId      Int?      @map("profile_image_id") @db.UnsignedInt
+  primaryRoleId       Int       @map("primary_role_id") @db.UnsignedInt
+  gender              Int?      @default(0) @db.UnsignedTinyInt
+  authFailedCount     Int?      @default(0) @map("auth_failed_count") @db.UnsignedTinyInt
+  lastSigned          DateTime? @map("last_signed") @db.Timestamp(0)
+  lastPasswordChanged DateTime? @map("last_password_changed") @db.Timestamp(0)
+  lastNickChanged     DateTime? @map("last_nick_changed") @db.Timestamp(0)
+  enabled             Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  isDormant           Boolean   @default(dbgenerated("b'0'")) @map("dormant") @db.Bit(1)
+  userAppStatus       Int?      @default(0) @map("user_app_status") @db.UnsignedTinyInt
+  isAccountExpired    Boolean   @default(dbgenerated("b'0'")) @map("account_expired") @db.Bit(1)
+  isAccountLocked     Boolean   @default(dbgenerated("b'0'")) @map("account_locked") @db.Bit(1)
+  createdAt           DateTime? @default(now()) @map("created") @db.Timestamp(0)
+  lastModifiedAt      DateTime? @updatedAt() @map("last_modified") @db.Timestamp(0)
+
+  partnerUserDetails PartnerUserDetail[]
+  partnerUserRoles   PartnerUserRole[]
+  userRoles          UserRole[]
+  role               Role                @relation(fields: [primaryRoleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_USER__PRI_ROLE")
+  UserMeta           UserMeta[]          @relation(map: "FK_USER_META__USER")
+  Compensation       Compensation[]
+
+  @@unique([cellNumber, enabled], map: "UK_USER__CELL_NUMBER")
+  @@index([primaryRoleId], map: "FK_USER__PRI_ROLE")
+  @@index([profileImageId], map: "FK_USER__PROFILE")
+  @@map("users")
+}
+
+model Role {
+  id               Int               @id @default(autoincrement()) @db.UnsignedInt
+  parentType       Int               @default(0) @map("parent_type") @db.TinyInt
+  roleCode         String            @map("role_code") @db.VarChar(40)
+  roleTitle        String            @map("role_title") @db.VarChar(40)
+  description      String?           @db.VarChar(200)
+  locked           Boolean           @default(dbgenerated("b'0'")) @db.Bit(1)
+  partnerUserRoles PartnerUserRole[]
+  userRoles        UserRole[]
+  users            User[]
+
+  @@map("roles")
+}
+
+model MessageBundle {
+  id                 Int       @id @default(autoincrement()) @db.UnsignedInt
+  languageCode       String    @default("ko") @map("language_code") @db.VarChar(10)
+  version            Int       @default(1) @db.UnsignedInt
+  messageCode        String?   @unique(map: "UQ_MESSAGE_BUNDLE__CODE_TMP") @map("message_code") @db.VarChar(100)
+  messageTitle       String?   @map("message_title") @db.VarChar(100)
+  messageContent     String?   @map("message_content") @db.Text
+  messageDescription String?   @map("message_description") @db.VarChar(200)
+  deleted            Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  createdBy          String?   @map("created_by") @db.VarChar(100)
+  lastModifiedBy     String?   @map("last_modified_by") @db.VarChar(100)
+  createdAt          DateTime? @default(now()) @map("created") @db.Timestamp(0)
+  lastModifiedAt     DateTime? @updatedAt @map("last_modified") @db.Timestamp(0)
+
+  @@unique([languageCode, messageCode], map: "UQ_MESSAGE_BUNDLE__CODE")
+  @@map("message_bundles")
+}
+
+model Display {
+  id              Int       @id @default(autoincrement()) @db.UnsignedInt
+  code            String    @unique(map: "UQ_DISPLAY_CODE") @db.VarChar(20)
+  title           String    @db.VarChar(100)
+  platform        String    @db.VarChar(20)
+  enable          Boolean   @default(dbgenerated("b'1'")) @db.Bit(1) // 삭제 여부
+  createdBy       String?   @map("created_by") @db.VarChar(20)
+  lastModifiedBy  String?   @map("last_modified_by") @db.VarChar(20)
+  createdAt       DateTime? @default(now()) @map("created") @db.Timestamp(0)
+  lasstModifiedAt DateTime? @updatedAt() @map("last_modified") @db.Timestamp(0)
+
+  @@map("displays")
+}
+
+model Campaign {
+  id              Int       @id @default(autoincrement()) @db.UnsignedInt
+  code            String    @unique(map: "UQ_CAMPAIN_CODE") @db.VarChar(20)
+  title           String    @db.VarChar(100)
+  startDate       DateTime? @map("start_date") @db.Timestamp(0) // null이면 노출 기간이 없으므로 상시
+  endDate         DateTime? @map("end_date") @db.Timestamp(0) // null이면 노출 기간이 없으므로 상시
+  sortOrder       Int       @default(0) @map("sort_order") @db.UnsignedInt // 정렬
+  visible         Boolean   @default(dbgenerated("b'0'")) @db.Bit(1) // 노출 여부
+  enable          Boolean   @default(dbgenerated("b'1'")) @db.Bit(1) // 삭제 여부
+  createdBy       String?   @map("created_by") @db.VarChar(20)
+  lastModifiedBy  String?   @map("last_modified_by") @db.VarChar(20)
+  createdAt       DateTime? @default(now()) @map("created") @db.Timestamp(0)
+  lasstModifiedAt DateTime? @updatedAt() @map("last_modified") @db.Timestamp(0)
+
+  @@map("campaigns")
+}
+
+model CustomerUserDetail {
+  id       Int     @id @db.UnsignedInt
+  token    String? @db.VarChar(40)
+  migrated Boolean @default(dbgenerated("b'0'")) @db.Bit(1)
+
+  @@map("customer_user_details")
+}
+
+// 이벤트 관련 테이블
+model Event {
+  id              Int            @id @db.UnsignedInt
+  code            String         @db.VarChar(40)
+  type            String         @db.VarChar(30) // Event의 타입
+  retailStart     DateTime?      @map("retail_start") @db.DateTime(0)
+  retailEnd       DateTime?      @map("retail_end") @db.DateTime(0)
+  enabled         Boolean        @default(dbgenerated("b'1'")) @db.Bit(1)
+  createdBy       String?        @map("created_by") @db.VarChar(20)
+  lastModifiedBy  String?        @map("last_modified_by") @db.VarChar(20)
+  createdAt       DateTime?      @default(now()) @map("created") @db.Timestamp(0)
+  lasstModifiedAt DateTime?      @updatedAt() @map("last_modified") @db.Timestamp(0)
+  Compensation    Compensation[]
+
+  @@map("events")
+}
+
+model Compensation {
+  id              Int       @id @db.UnsignedInt
+  isRewarded      Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  rewardDate      DateTime? @map("reward_date") @db.DateTime(0)
+  status          String    @map("status") @db.VarChar(20) // succcess, fail
+  createdBy       String?   @map("created_by") @db.VarChar(20)
+  lastModifiedBy  String?   @map("last_modified_by") @db.VarChar(20)
+  createdAt       DateTime? @default(now()) @map("created") @db.Timestamp(0)
+  lasstModifiedAt DateTime? @updatedAt() @map("last_modified") @db.Timestamp(0)
+
+  events Event[]
+  users  User[]
+
+  @@map("compensations")
+}
+
+model PartnerUserDetail {
+  id                Int       @id @default(autoincrement()) @db.UnsignedInt
+  token             String?   @db.VarChar(40)
+  profileImageId    Int?      @map("profile_image_id") @db.UnsignedInt
+  userId            Int       @map("user_id") @db.UnsignedInt
+  groupId           Int       @map("group_id") @db.UnsignedInt
+  jobTitle          String?   @map("job_title") @db.VarChar(10)
+  color             String?   @db.VarChar(8)
+  bankAccountId     Int?      @map("bank_account_id") @db.UnsignedInt
+  workingCellNumber String?   @map("working_cell_number") @db.VarChar(20)
+  nickname          String?   @db.VarChar(10)
+  flag              Int       @default(0) @db.UnsignedTinyInt
+  createdAt         DateTime? @default(now()) @map("created") @db.Timestamp(0)
+  lastModifiedAt    DateTime? @updatedAt() @map("last_modified") @db.Timestamp(0)
+  user              User      @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_PU_DETAIL__USER")
+
+  @@index([profileImageId], map: "FK_PU_DETAIL__ATTACHMENT")
+  @@index([bankAccountId], map: "FK_PU_DETAIL__BANK")
+  @@index([userId], map: "FK_PU_DETAIL__USER")
+  @@map("partner_user_details")
+}
+
+model PartnerUserRole {
+  userId  Int  @map("user_id") @db.UnsignedInt
+  groupId Int  @map("group_id") @db.UnsignedInt
+  roleId  Int  @map("role_id") @db.UnsignedInt
+  role    Role @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_PU_ROLE__ROLE")
+  user    User @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_PU_ROLE__USER")
+
+  @@id([userId, groupId, roleId])
+  @@index([groupId], map: "FK_PU_ROLE__GROUP")
+  @@index([roleId], map: "FK_PU_ROLE__ROLE")
+  @@map("partner_user_roles")
+}
+
+model TermTaxonomy {
+  termTaxonomyId      Int            @id @default(autoincrement()) @map("term_taxonomy_id") @db.UnsignedInt
+  termId              Int            @default(0) @map("term_id") @db.UnsignedInt
+  taxonomy            String         @default("") @db.VarChar(32)
+  description         String?        @db.LongText
+  parent              Int?           @db.UnsignedInt
+  term                Term           @relation(fields: [termId], references: [id])
+  parentTermTaxonomy  TermTaxonomy?  @relation("termTaxonomyHierarchy", map: "TERM_TAXONOMY_PARENT", fields: [parent], references: [termTaxonomyId])
+  childTermTaxonomies TermTaxonomy[] @relation("termTaxonomyHierarchy")
+  tag                 Tag?
+
+  @@unique([termId, taxonomy, parent], map: "UK_TERM_TAXONOMY")
+  @@index([taxonomy], map: "K_TAXONOMY")
+  @@map("term_taxonomies")
+}
+
+model Tag {
+  termTaxonomyId Int          @id @map("term_taxonomy_id") @db.UnsignedInt
+  termTaxonomy   TermTaxonomy @relation(fields: [termTaxonomyId], references: [termTaxonomyId], onDelete: NoAction, onUpdate: NoAction, map: "FK_TT_PRODUCT_TAG")
+
+  @@map("term_taxonomy_tags")
+}
+
+model Term {
+  id             Int            @id @default(autoincrement()) @db.UnsignedInt
+  name           String         @default("") @db.VarChar(200)
+  slug           String         @unique(map: "UK_SLUG") @default("") @db.VarChar(200)
+  termGroup      Int            @default(0) @map("term_group")
+  termTaxonomies TermTaxonomy[]
+
+  @@index([name], map: "name")
+  @@map("terms")
+}
+
+model UserMeta {
+  userId    Int    @map("user_id") @db.UnsignedInt
+  key       String @db.VarChar(40)
+  value     String @db.Text
+  valueType String @map("value_type") @db.VarChar(20)
+  user      User   @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_USER_META__USER")
+
+  @@unique([userId, key], map: "UQ_USER_META")
+  @@map("user_meta")
+}
+
+model UserRole {
+  userId Int  @map("user_id") @db.UnsignedInt
+  roleId Int  @map("role_id") @db.UnsignedInt
+  role   Role @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_U_R_ROLE")
+  user   User @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_U_R_USER")
+
+  @@id([userId, roleId])
+  @@index([roleId], map: "FK_U_R_ROLE")
+  @@index([userId], map: "FK_U_R_USER")
+  @@map("user_roles")
+}
+
+enum BannerReferenceType {
+  PRODUCT
+  BRAND
+
+  @@map("banner_reference_type")
+}
+
+enum MetaValueType {
+  STRING
+  INTEGER
+  FLOAT
+
+  @@map("value_type")
+}
