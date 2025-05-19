@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 import {
   IsDateString,
@@ -77,14 +78,19 @@ export class CreateUserDto {
   @IsString()
   cellNumber?: string | null;
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
     required: false,
     nullable: true,
   })
   @IsOptional()
-  @IsInt()
-  profileImageId?: number | null;
+  @IsString()
+  profileImageId?: string | null;
+  @ApiProperty({
+    type: "string",
+  })
+  @IsNotEmpty()
+  @IsString()
+  primaryRoleId: string;
   @ApiProperty({
     type: "integer",
     format: "int32",
@@ -152,4 +158,29 @@ export class CreateUserDto {
   @IsOptional()
   @IsDateString()
   createdAt?: Date | null;
+  @ApiProperty({
+    type: () => Object,
+  })
+  @IsNotEmpty()
+  partnerUserDetails: Prisma.InputJsonValue;
+  @ApiProperty({
+    type: () => Object,
+  })
+  @IsNotEmpty()
+  partnerUserRoles: Prisma.InputJsonValue;
+  @ApiProperty({
+    type: () => Object,
+  })
+  @IsNotEmpty()
+  userRoles: Prisma.InputJsonValue;
+  @ApiProperty({
+    type: () => Object,
+  })
+  @IsNotEmpty()
+  UserMetas: Prisma.InputJsonValue;
+  @ApiProperty({
+    type: () => Object,
+  })
+  @IsNotEmpty()
+  Compensation: Prisma.InputJsonValue;
 }

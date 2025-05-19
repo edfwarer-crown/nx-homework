@@ -1,6 +1,5 @@
 import { ApiExtraModels, ApiProperty } from "@nestjs/swagger";
 import {
-  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -10,13 +9,11 @@ import { Type } from "class-transformer";
 
 export class TermTaxonomyTermIdTaxonomyParentUniqueInputDto {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
-    default: 0,
+    type: "string",
   })
   @IsNotEmpty()
-  @IsInt()
-  termId: number;
+  @IsString()
+  termId: string;
   @ApiProperty({
     type: "string",
     default: "",
@@ -25,25 +22,23 @@ export class TermTaxonomyTermIdTaxonomyParentUniqueInputDto {
   @IsString()
   taxonomy: string;
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
   @IsNotEmpty()
-  @IsInt()
-  parent: number;
+  @IsString()
+  parent: string;
 }
 
 @ApiExtraModels(TermTaxonomyTermIdTaxonomyParentUniqueInputDto)
 export class ConnectTermTaxonomyDto {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
     required: false,
     nullable: true,
   })
   @IsOptional()
-  @IsInt()
-  termTaxonomyId?: number;
+  @IsString()
+  termTaxonomyId?: string;
   @ApiProperty({
     type: TermTaxonomyTermIdTaxonomyParentUniqueInputDto,
     required: false,

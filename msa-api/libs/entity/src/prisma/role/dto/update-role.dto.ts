@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsOptional, IsString } from "class-validator";
 
@@ -24,4 +25,22 @@ export class UpdateRoleDto {
   @IsOptional()
   @IsString()
   description?: string | null;
+  @ApiProperty({
+    type: () => Object,
+    required: false,
+  })
+  @IsOptional()
+  partnerUserRoles?: Prisma.InputJsonValue;
+  @ApiProperty({
+    type: () => Object,
+    required: false,
+  })
+  @IsOptional()
+  userRoles?: Prisma.InputJsonValue;
+  @ApiProperty({
+    type: () => Object,
+    required: false,
+  })
+  @IsOptional()
+  users?: Prisma.InputJsonValue;
 }

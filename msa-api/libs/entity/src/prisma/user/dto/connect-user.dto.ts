@@ -1,7 +1,6 @@
 import { ApiExtraModels, ApiProperty } from "@nestjs/swagger";
 import {
   IsBoolean,
-  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -18,7 +17,7 @@ export class UserCellNumberEnabledUniqueInputDto {
   cellNumber: string;
   @ApiProperty({
     type: "boolean",
-    default: "dbgenerated",
+    default: false,
   })
   @IsNotEmpty()
   @IsBoolean()
@@ -28,14 +27,13 @@ export class UserCellNumberEnabledUniqueInputDto {
 @ApiExtraModels(UserCellNumberEnabledUniqueInputDto)
 export class ConnectUserDto {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
     required: false,
     nullable: true,
   })
   @IsOptional()
-  @IsInt()
-  id?: number;
+  @IsString()
+  id?: string;
   @ApiProperty({
     type: "string",
     required: false,

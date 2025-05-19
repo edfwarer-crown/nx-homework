@@ -1,11 +1,11 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CompensationDto {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  id: number;
+  id: string;
   @ApiProperty({
     type: "boolean",
   })
@@ -42,4 +42,22 @@ export class CompensationDto {
     nullable: true,
   })
   lasstModifiedAt: Date | null;
+  @ApiProperty({
+    type: () => Object,
+  })
+  events: Prisma.JsonValue;
+  @ApiProperty({
+    type: () => Object,
+  })
+  users: Prisma.JsonValue;
+  @ApiProperty({
+    type: () => Object,
+  })
+  Event: Prisma.JsonValue;
+  @ApiProperty({
+    type: "integer",
+    format: "int32",
+    nullable: true,
+  })
+  eventId: number | null;
 }

@@ -1,15 +1,19 @@
 import { ApiExtraModels, ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsNotEmpty, IsString, ValidateNested } from "class-validator";
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from "class-validator";
 import { Type } from "class-transformer";
 
 export class UserMetaUserIdKeyUniqueInputDto {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
   @IsNotEmpty()
-  @IsInt()
-  userId: number;
+  @IsString()
+  userId: string;
   @ApiProperty({
     type: "string",
   })
@@ -21,10 +25,20 @@ export class UserMetaUserIdKeyUniqueInputDto {
 @ApiExtraModels(UserMetaUserIdKeyUniqueInputDto)
 export class ConnectUserMetaDto {
   @ApiProperty({
-    type: UserMetaUserIdKeyUniqueInputDto,
+    type: "string",
+    required: false,
+    nullable: true,
   })
-  @IsNotEmpty()
+  @IsOptional()
+  @IsString()
+  id?: string;
+  @ApiProperty({
+    type: UserMetaUserIdKeyUniqueInputDto,
+    required: false,
+    nullable: true,
+  })
+  @IsOptional()
   @ValidateNested()
   @Type(() => UserMetaUserIdKeyUniqueInputDto)
-  userId_key: UserMetaUserIdKeyUniqueInputDto;
+  userId_key?: UserMetaUserIdKeyUniqueInputDto;
 }

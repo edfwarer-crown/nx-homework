@@ -1,7 +1,15 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsOptional, IsString } from "class-validator";
 
 export class UpdateUserMetaDto {
+  @ApiProperty({
+    type: "string",
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  userId?: string;
   @ApiProperty({
     type: "string",
     required: false,
@@ -23,4 +31,10 @@ export class UpdateUserMetaDto {
   @IsOptional()
   @IsString()
   valueType?: string;
+  @ApiProperty({
+    type: () => Object,
+    required: false,
+  })
+  @IsOptional()
+  user?: Prisma.InputJsonValue;
 }

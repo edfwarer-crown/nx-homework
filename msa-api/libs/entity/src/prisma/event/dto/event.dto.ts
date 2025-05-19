@@ -1,11 +1,11 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class EventDto {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  id: number;
+  id: string;
   @ApiProperty({
     type: "string",
   })
@@ -52,4 +52,8 @@ export class EventDto {
     nullable: true,
   })
   lasstModifiedAt: Date | null;
+  @ApiProperty({
+    type: () => Object,
+  })
+  Compensation: Prisma.JsonValue;
 }

@@ -1,11 +1,11 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class PartnerUserDetailDto {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  id: number;
+  id: string;
   @ApiProperty({
     type: "string",
     nullable: true,
@@ -17,6 +17,10 @@ export class PartnerUserDetailDto {
     nullable: true,
   })
   profileImageId: number | null;
+  @ApiProperty({
+    type: "string",
+  })
+  userId: string;
   @ApiProperty({
     type: "integer",
     format: "int32",
@@ -65,4 +69,8 @@ export class PartnerUserDetailDto {
     nullable: true,
   })
   lastModifiedAt: Date | null;
+  @ApiProperty({
+    type: () => Object,
+  })
+  user: Prisma.JsonValue;
 }

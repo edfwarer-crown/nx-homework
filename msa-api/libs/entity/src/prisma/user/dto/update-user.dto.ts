@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDateString, IsInt, IsOptional, IsString } from "class-validator";
 
@@ -74,14 +75,20 @@ export class UpdateUserDto {
   @IsString()
   cellNumber?: string | null;
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
     required: false,
     nullable: true,
   })
   @IsOptional()
-  @IsInt()
-  profileImageId?: number | null;
+  @IsString()
+  profileImageId?: string | null;
+  @ApiProperty({
+    type: "string",
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  primaryRoleId?: string;
   @ApiProperty({
     type: "integer",
     format: "int32",
@@ -149,4 +156,34 @@ export class UpdateUserDto {
   @IsOptional()
   @IsDateString()
   createdAt?: Date | null;
+  @ApiProperty({
+    type: () => Object,
+    required: false,
+  })
+  @IsOptional()
+  partnerUserDetails?: Prisma.InputJsonValue;
+  @ApiProperty({
+    type: () => Object,
+    required: false,
+  })
+  @IsOptional()
+  partnerUserRoles?: Prisma.InputJsonValue;
+  @ApiProperty({
+    type: () => Object,
+    required: false,
+  })
+  @IsOptional()
+  userRoles?: Prisma.InputJsonValue;
+  @ApiProperty({
+    type: () => Object,
+    required: false,
+  })
+  @IsOptional()
+  UserMetas?: Prisma.InputJsonValue;
+  @ApiProperty({
+    type: () => Object,
+    required: false,
+  })
+  @IsOptional()
+  Compensation?: Prisma.InputJsonValue;
 }

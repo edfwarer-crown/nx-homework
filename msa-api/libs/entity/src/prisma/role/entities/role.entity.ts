@@ -1,14 +1,11 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
-import { PartnerUserRoleEntity } from "../../partner-user-role/entities/partner-user-role.entity";
-import { UserRoleEntity } from "../../user-role/entities/user-role.entity";
-import { UserEntity } from "../../user/entities/user.entity";
 
 export class RoleEntity {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  id: number;
+  id: string;
   @ApiProperty({
     type: "integer",
     format: "int32",
@@ -32,21 +29,15 @@ export class RoleEntity {
   })
   locked: boolean;
   @ApiProperty({
-    type: () => PartnerUserRoleEntity,
-    isArray: true,
-    required: false,
+    type: () => Object,
   })
-  partnerUserRoles?: Partial<PartnerUserRoleEntity>[];
+  partnerUserRoles: Prisma.JsonValue;
   @ApiProperty({
-    type: () => UserRoleEntity,
-    isArray: true,
-    required: false,
+    type: () => Object,
   })
-  userRoles?: Partial<UserRoleEntity>[];
+  userRoles: Prisma.JsonValue;
   @ApiProperty({
-    type: () => UserEntity,
-    isArray: true,
-    required: false,
+    type: () => Object,
   })
-  users?: Partial<UserEntity>[];
+  users: Prisma.JsonValue;
 }

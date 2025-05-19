@@ -1,15 +1,13 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
-import { TermTaxonomyEntity } from "../../term-taxonomy/entities/term-taxonomy.entity";
 
 export class TagEntity {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  termTaxonomyId: number;
+  termTaxonomyId: string;
   @ApiProperty({
-    type: () => TermTaxonomyEntity,
-    required: false,
+    type: () => Object,
   })
-  termTaxonomy?: Partial<TermTaxonomyEntity>;
+  termTaxonomy: Prisma.JsonValue;
 }

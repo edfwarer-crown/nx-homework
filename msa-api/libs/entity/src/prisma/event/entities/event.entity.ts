@@ -1,12 +1,11 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
-import { CompensationEntity } from "../../compensation/entities/compensation.entity";
 
 export class EventEntity {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  id: number;
+  id: string;
   @ApiProperty({
     type: "string",
   })
@@ -54,9 +53,7 @@ export class EventEntity {
   })
   lasstModifiedAt: Date | null;
   @ApiProperty({
-    type: () => CompensationEntity,
-    isArray: true,
-    required: false,
+    type: () => Object,
   })
-  Compensation?: Partial<CompensationEntity>[];
+  Compensation: Prisma.JsonValue;
 }

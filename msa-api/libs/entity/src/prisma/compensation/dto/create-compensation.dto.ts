@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 import {
   IsDateString,
@@ -8,13 +9,6 @@ import {
 } from "class-validator";
 
 export class CreateCompensationDto {
-  @ApiProperty({
-    type: "integer",
-    format: "int32",
-  })
-  @IsNotEmpty()
-  @IsInt()
-  id: number;
   @ApiProperty({
     type: "string",
     format: "date-time",
@@ -56,4 +50,28 @@ export class CreateCompensationDto {
   @IsOptional()
   @IsDateString()
   createdAt?: Date | null;
+  @ApiProperty({
+    type: () => Object,
+  })
+  @IsNotEmpty()
+  events: Prisma.InputJsonValue;
+  @ApiProperty({
+    type: () => Object,
+  })
+  @IsNotEmpty()
+  users: Prisma.InputJsonValue;
+  @ApiProperty({
+    type: () => Object,
+  })
+  @IsNotEmpty()
+  Event: Prisma.InputJsonValue;
+  @ApiProperty({
+    type: "integer",
+    format: "int32",
+    required: false,
+    nullable: true,
+  })
+  @IsOptional()
+  @IsInt()
+  eventId?: number | null;
 }

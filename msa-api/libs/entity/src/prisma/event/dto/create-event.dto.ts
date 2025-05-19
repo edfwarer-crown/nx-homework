@@ -1,20 +1,13 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 import {
   IsDateString,
-  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
 } from "class-validator";
 
 export class CreateEventDto {
-  @ApiProperty({
-    type: "integer",
-    format: "int32",
-  })
-  @IsNotEmpty()
-  @IsInt()
-  id: number;
   @ApiProperty({
     type: "string",
   })
@@ -71,4 +64,9 @@ export class CreateEventDto {
   @IsOptional()
   @IsDateString()
   createdAt?: Date | null;
+  @ApiProperty({
+    type: () => Object,
+  })
+  @IsNotEmpty()
+  Compensation: Prisma.InputJsonValue;
 }

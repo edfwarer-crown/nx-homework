@@ -1,13 +1,11 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
-import { EventEntity } from "../../event/entities/event.entity";
-import { UserEntity } from "../../user/entities/user.entity";
 
 export class CompensationEntity {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  id: number;
+  id: string;
   @ApiProperty({
     type: "boolean",
   })
@@ -45,15 +43,21 @@ export class CompensationEntity {
   })
   lasstModifiedAt: Date | null;
   @ApiProperty({
-    type: () => EventEntity,
-    isArray: true,
-    required: false,
+    type: () => Object,
   })
-  events?: Partial<EventEntity>[];
+  events: Prisma.JsonValue;
   @ApiProperty({
-    type: () => UserEntity,
-    isArray: true,
-    required: false,
+    type: () => Object,
   })
-  users?: Partial<UserEntity>[];
+  users: Prisma.JsonValue;
+  @ApiProperty({
+    type: () => Object,
+  })
+  Event: Prisma.JsonValue;
+  @ApiProperty({
+    type: "integer",
+    format: "int32",
+    nullable: true,
+  })
+  eventId: number | null;
 }

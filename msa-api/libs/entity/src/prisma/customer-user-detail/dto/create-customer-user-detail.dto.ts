@@ -1,14 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsOptional, IsString } from "class-validator";
 
 export class CreateCustomerUserDetailDto {
-  @ApiProperty({
-    type: "integer",
-    format: "int32",
-  })
-  @IsNotEmpty()
-  @IsInt()
-  id: number;
   @ApiProperty({
     type: "string",
     required: false,

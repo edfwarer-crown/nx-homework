@@ -1,11 +1,11 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class TermDto {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  id: number;
+  id: string;
   @ApiProperty({
     type: "string",
   })
@@ -19,4 +19,8 @@ export class TermDto {
     format: "int32",
   })
   termGroup: number;
+  @ApiProperty({
+    type: () => Object,
+  })
+  termTaxonomies: Prisma.JsonValue;
 }

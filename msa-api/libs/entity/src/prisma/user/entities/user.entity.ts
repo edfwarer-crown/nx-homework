@@ -1,17 +1,11 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
-import { PartnerUserDetailEntity } from "../../partner-user-detail/entities/partner-user-detail.entity";
-import { PartnerUserRoleEntity } from "../../partner-user-role/entities/partner-user-role.entity";
-import { UserRoleEntity } from "../../user-role/entities/user-role.entity";
-import { RoleEntity } from "../../role/entities/role.entity";
-import { UserMetaEntity } from "../../user-meta/entities/user-meta.entity";
-import { CompensationEntity } from "../../compensation/entities/compensation.entity";
 
 export class UserEntity {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  id: number;
+  id: string;
   @ApiProperty({
     type: "string",
   })
@@ -56,16 +50,14 @@ export class UserEntity {
   })
   cellNumber: string | null;
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
     nullable: true,
   })
-  profileImageId: number | null;
+  profileImageId: string | null;
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  primaryRoleId: number;
+  primaryRoleId: string;
   @ApiProperty({
     type: "integer",
     format: "int32",
@@ -131,38 +123,23 @@ export class UserEntity {
   })
   lastModifiedAt: Date | null;
   @ApiProperty({
-    type: () => PartnerUserDetailEntity,
-    isArray: true,
-    required: false,
+    type: () => Object,
   })
-  partnerUserDetails?: Partial<PartnerUserDetailEntity>[];
+  partnerUserDetails: Prisma.JsonValue;
   @ApiProperty({
-    type: () => PartnerUserRoleEntity,
-    isArray: true,
-    required: false,
+    type: () => Object,
   })
-  partnerUserRoles?: Partial<PartnerUserRoleEntity>[];
+  partnerUserRoles: Prisma.JsonValue;
   @ApiProperty({
-    type: () => UserRoleEntity,
-    isArray: true,
-    required: false,
+    type: () => Object,
   })
-  userRoles?: Partial<UserRoleEntity>[];
+  userRoles: Prisma.JsonValue;
   @ApiProperty({
-    type: () => RoleEntity,
-    required: false,
+    type: () => Object,
   })
-  role?: Partial<RoleEntity>;
+  UserMetas: Prisma.JsonValue;
   @ApiProperty({
-    type: () => UserMetaEntity,
-    isArray: true,
-    required: false,
+    type: () => Object,
   })
-  UserMeta?: Partial<UserMetaEntity>[];
-  @ApiProperty({
-    type: () => CompensationEntity,
-    isArray: true,
-    required: false,
-  })
-  Compensation?: Partial<CompensationEntity>[];
+  Compensation: Prisma.JsonValue;
 }

@@ -1,6 +1,15 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class UserMetaDto {
+  @ApiProperty({
+    type: "string",
+  })
+  id: string;
+  @ApiProperty({
+    type: "string",
+  })
+  userId: string;
   @ApiProperty({
     type: "string",
   })
@@ -13,4 +22,8 @@ export class UserMetaDto {
     type: "string",
   })
   valueType: string;
+  @ApiProperty({
+    type: () => Object,
+  })
+  user: Prisma.JsonValue;
 }

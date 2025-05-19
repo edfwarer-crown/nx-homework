@@ -1,11 +1,11 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class RoleDto {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  id: number;
+  id: string;
   @ApiProperty({
     type: "integer",
     format: "int32",
@@ -28,4 +28,16 @@ export class RoleDto {
     type: "boolean",
   })
   locked: boolean;
+  @ApiProperty({
+    type: () => Object,
+  })
+  partnerUserRoles: Prisma.JsonValue;
+  @ApiProperty({
+    type: () => Object,
+  })
+  userRoles: Prisma.JsonValue;
+  @ApiProperty({
+    type: () => Object,
+  })
+  users: Prisma.JsonValue;
 }

@@ -1,38 +1,11 @@
-import { ApiExtraModels, ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsNotEmpty, ValidateNested } from "class-validator";
-import { Type } from "class-transformer";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty, IsString } from "class-validator";
 
-export class PartnerUserRoleUserIdGroupIdRoleIdUniqueInputDto {
-  @ApiProperty({
-    type: "integer",
-    format: "int32",
-  })
-  @IsNotEmpty()
-  @IsInt()
-  userId: number;
-  @ApiProperty({
-    type: "integer",
-    format: "int32",
-  })
-  @IsNotEmpty()
-  @IsInt()
-  groupId: number;
-  @ApiProperty({
-    type: "integer",
-    format: "int32",
-  })
-  @IsNotEmpty()
-  @IsInt()
-  roleId: number;
-}
-
-@ApiExtraModels(PartnerUserRoleUserIdGroupIdRoleIdUniqueInputDto)
 export class ConnectPartnerUserRoleDto {
   @ApiProperty({
-    type: PartnerUserRoleUserIdGroupIdRoleIdUniqueInputDto,
+    type: "string",
   })
   @IsNotEmpty()
-  @ValidateNested()
-  @Type(() => PartnerUserRoleUserIdGroupIdRoleIdUniqueInputDto)
-  userId_groupId_roleId: PartnerUserRoleUserIdGroupIdRoleIdUniqueInputDto;
+  @IsString()
+  id: string;
 }

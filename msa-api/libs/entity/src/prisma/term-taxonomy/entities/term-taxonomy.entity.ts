@@ -1,18 +1,15 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
-import { TermEntity } from "../../term/entities/term.entity";
-import { TagEntity } from "../../tag/entities/tag.entity";
 
 export class TermTaxonomyEntity {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  termTaxonomyId: number;
+  termTaxonomyId: string;
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  termId: number;
+  termId: string;
   @ApiProperty({
     type: "string",
   })
@@ -23,32 +20,24 @@ export class TermTaxonomyEntity {
   })
   description: string | null;
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
     nullable: true,
   })
-  parent: number | null;
+  parent: string | null;
   @ApiProperty({
-    type: () => TermEntity,
-    required: false,
+    type: () => Object,
   })
-  term?: Partial<TermEntity>;
+  term: Prisma.JsonValue;
   @ApiProperty({
-    type: () => TermTaxonomyEntity,
-    required: false,
-    nullable: true,
+    type: () => Object,
   })
-  parentTermTaxonomy?: Partial<TermTaxonomyEntity> | null;
+  parentTermTaxonomy: Prisma.JsonValue;
   @ApiProperty({
-    type: () => TermTaxonomyEntity,
-    isArray: true,
-    required: false,
+    type: () => Object,
   })
-  childTermTaxonomies?: Partial<TermTaxonomyEntity>[];
+  childTermTaxonomies: Prisma.JsonValue;
   @ApiProperty({
-    type: () => TagEntity,
-    required: false,
-    nullable: true,
+    type: () => Object,
   })
-  tag?: Partial<TagEntity> | null;
+  tag: Prisma.JsonValue;
 }

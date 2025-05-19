@@ -1,6 +1,5 @@
 import { ApiExtraModels, ApiProperty } from "@nestjs/swagger";
 import {
-  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -27,14 +26,13 @@ export class MessageBundleLanguageCodeMessageCodeUniqueInputDto {
 @ApiExtraModels(MessageBundleLanguageCodeMessageCodeUniqueInputDto)
 export class ConnectMessageBundleDto {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
     required: false,
     nullable: true,
   })
   @IsOptional()
-  @IsInt()
-  id?: number;
+  @IsString()
+  id?: string;
   @ApiProperty({
     type: "string",
     required: false,

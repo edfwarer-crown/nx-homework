@@ -1,16 +1,15 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsOptional, IsString } from "class-validator";
+import { IsOptional, IsString } from "class-validator";
 
 export class ConnectCampaignDto {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
     required: false,
     nullable: true,
   })
   @IsOptional()
-  @IsInt()
-  id?: number;
+  @IsString()
+  id?: string;
   @ApiProperty({
     type: "string",
     required: false,

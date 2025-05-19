@@ -1,26 +1,25 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
-import { RoleEntity } from "../../role/entities/role.entity";
-import { UserEntity } from "../../user/entities/user.entity";
 
 export class UserRoleEntity {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  userId: number;
+  id: string;
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  roleId: number;
+  userId: string;
   @ApiProperty({
-    type: () => RoleEntity,
-    required: false,
+    type: "string",
   })
-  role?: Partial<RoleEntity>;
+  roleId: string;
   @ApiProperty({
-    type: () => UserEntity,
-    required: false,
+    type: () => Object,
   })
-  user?: Partial<UserEntity>;
+  role: Prisma.JsonValue;
+  @ApiProperty({
+    type: () => Object,
+  })
+  user: Prisma.JsonValue;
 }

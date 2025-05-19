@@ -1,12 +1,11 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
-import { TermTaxonomyEntity } from "../../term-taxonomy/entities/term-taxonomy.entity";
 
 export class TermEntity {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  id: number;
+  id: string;
   @ApiProperty({
     type: "string",
   })
@@ -21,9 +20,7 @@ export class TermEntity {
   })
   termGroup: number;
   @ApiProperty({
-    type: () => TermTaxonomyEntity,
-    isArray: true,
-    required: false,
+    type: () => Object,
   })
-  termTaxonomies?: Partial<TermTaxonomyEntity>[];
+  termTaxonomies: Prisma.JsonValue;
 }

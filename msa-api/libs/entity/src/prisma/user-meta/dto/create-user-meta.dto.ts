@@ -1,7 +1,14 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString } from "class-validator";
 
 export class CreateUserMetaDto {
+  @ApiProperty({
+    type: "string",
+  })
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
   @ApiProperty({
     type: "string",
   })
@@ -20,4 +27,9 @@ export class CreateUserMetaDto {
   @IsNotEmpty()
   @IsString()
   valueType: string;
+  @ApiProperty({
+    type: () => Object,
+  })
+  @IsNotEmpty()
+  user: Prisma.InputJsonValue;
 }

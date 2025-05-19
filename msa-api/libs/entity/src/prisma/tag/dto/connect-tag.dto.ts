@@ -1,12 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsString } from "class-validator";
 
 export class ConnectTagDto {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
   @IsNotEmpty()
-  @IsInt()
-  termTaxonomyId: number;
+  @IsString()
+  termTaxonomyId: string;
 }

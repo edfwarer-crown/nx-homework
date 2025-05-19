@@ -1,12 +1,11 @@
+import { Prisma } from "@prisma/client";
 import { ApiProperty } from "@nestjs/swagger";
-import { UserEntity } from "../../user/entities/user.entity";
 
 export class PartnerUserDetailEntity {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  id: number;
+  id: string;
   @ApiProperty({
     type: "string",
     nullable: true,
@@ -19,10 +18,9 @@ export class PartnerUserDetailEntity {
   })
   profileImageId: number | null;
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  userId: number;
+  userId: string;
   @ApiProperty({
     type: "integer",
     format: "int32",
@@ -72,8 +70,7 @@ export class PartnerUserDetailEntity {
   })
   lastModifiedAt: Date | null;
   @ApiProperty({
-    type: () => UserEntity,
-    required: false,
+    type: () => Object,
   })
-  user?: Partial<UserEntity>;
+  user: Prisma.JsonValue;
 }

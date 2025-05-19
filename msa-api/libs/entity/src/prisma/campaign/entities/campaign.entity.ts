@@ -2,10 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class CampaignEntity {
   @ApiProperty({
-    type: "integer",
-    format: "int32",
+    type: "string",
   })
-  id: number;
+  id: string;
   @ApiProperty({
     type: "string",
   })
