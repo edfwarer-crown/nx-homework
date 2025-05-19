@@ -1,6 +1,5 @@
 import {Injectable, Logger} from "@nestjs/common"
-
-import {PrismaService} from "@libs/entity/prisma.service"
+import {PrismaService} from "../prisma.service"
 
 @Injectable()
 export class SystemSchedulerManageService {

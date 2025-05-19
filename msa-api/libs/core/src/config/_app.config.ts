@@ -1,6 +1,6 @@
 import {registerAs} from "@nestjs/config"
+import {AppConfig} from "./config.type";
 
-import {AppConfig} from "@libs/core/config/config.type"
 
 export default registerAs(
     "app",

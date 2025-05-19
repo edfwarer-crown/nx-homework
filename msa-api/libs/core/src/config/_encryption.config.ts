@@ -1,8 +1,8 @@
 import * as process from "node:process"
 
 import {registerAs} from "@nestjs/config"
+import {EncryptionConfig} from "./config.type";
 
-import {EncryptionConfig} from "@libs/core/config"
 
 export default registerAs(
     "encryptionConfig",

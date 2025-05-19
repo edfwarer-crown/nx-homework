@@ -1,5 +1,5 @@
 import {Injectable, Logger} from "@nestjs/common"
-import {PrismaService} from "@libs/entity/prisma.service"
+import {PrismaService} from "../../../../../libs/entity/src/prisma.service";
 
 @Injectable()
 export class UserDeviceService {

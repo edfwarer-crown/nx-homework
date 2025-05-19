@@ -1,8 +1,8 @@
 import {ApiProperty} from "@nestjs/swagger"
 import {getAlpha3Codes} from "i18n-iso-countries"
+import {ApiBooleanPropertyDecorator} from "../../utils/src/decorator/api-boolean-property.decorator";
+import {Platform, PlatformType} from "./enums/platform-type.enum";
 
-import {Platform, PlatformType} from "@libs/dto/enums/platform-type.enum"
-import {ApiBooleanPropertyDecorator} from "@libs/utils/decorator/api-boolean-property.decorator"
 
 export class CellNumberCheckRequestDto {
     @ApiProperty({

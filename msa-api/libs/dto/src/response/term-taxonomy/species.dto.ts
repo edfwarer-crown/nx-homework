@@ -1,6 +1,6 @@
 import {ApiProperty} from "@nestjs/swagger"
+import {TermTaxonomyDto} from "./term-taxonomy.dto";
 
-import {TermTaxonomyDto} from "@libs/dto/response/term-taxonomy/term-taxonomy.dto"
 
 export class SpeciesDto extends TermTaxonomyDto {
     @ApiProperty({

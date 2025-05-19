@@ -70,7 +70,8 @@ npx prisma generate
 
 [NestJS Decorator](https://docs.nestjs.com/custom-decorators#param-decorators)
  
-# 비고
+# 비고 (진행예정)
 1. user_config(사용자 설정) : 유저 편의를 위한 기능을 고려중 
 2. user_device : 기기별 로그인 시 기기 인증 이벤트 구현 예정
 3. batch를 이용해 보상 지급
+4. 시간이 없어서 인증 관련 기능 밖에 구현하지 못함.

@@ -1,6 +1,6 @@
 import {ApiProperty} from "@nestjs/swagger"
+import {RoleDto} from "./user/role.dto";
 
-import {RoleDto} from "@libs/dto/response/user/role.dto"
 
 export class UserDto {
     username: string

@@ -1,8 +1,8 @@
 import * as process from "node:process"
 
 import {registerAs} from "@nestjs/config"
+import {MongoConfig} from "./config.type";
 
-import {MongoConfig} from "@libs/core/config"
 
 export default registerAs("mongodb", () => {
     return {

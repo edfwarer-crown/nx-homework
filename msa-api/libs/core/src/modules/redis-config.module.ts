@@ -3,12 +3,11 @@ import {Module} from "@nestjs/common"
 import {ConfigModule, ConfigService} from "@nestjs/config"
 import type {RedisOptions} from "ioredis"
 
-import {redisConfig} from "@libs/core/config"
 
 @Module({
     imports: [
         RedisModule.forRootAsync({
-            imports: [ConfigModule.forFeature(redisConfig)],
+            imports: [],
             inject: [ConfigService],
             useFactory: (configService: ConfigService) => {
                 return {

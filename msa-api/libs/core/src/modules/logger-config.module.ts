@@ -6,11 +6,8 @@ import {LoggerModule} from "nestjs-pino"
 import {Params} from "nestjs-pino/params"
 import pino from "pino"
 import {v4} from "uuid"
+import {isNotLocal} from "../../../utils/src/node-env";
 
-import {searchConfig} from "@libs/core/config"
-import {isNotLocal} from "@libs/utils/node-env"
-import {ElasticsearchLoggerModule} from "@libs/utils/trace-logger/elasticsearch-logger.module"
-import {ROLLING_INDEX_MODE} from "@libs/utils/trace-logger/elasticsearch-logger.utils"
 
 const loggerAlias = {
     scope: Scope.TRANSIENT,
@@ -21,21 +18,6 @@ const loggerAlias = {
 
 @Module({
     imports: [
-        ElasticsearchLoggerModule.registerAsync({
-            isGlobal: true,
-            imports: [ConfigModule.forFeature(searchConfig)],
-            useFactory: (configService: ConfigService) => {
-                return {
-                    name: "elasticsearch-trace-logger",
-                    indexPrefix: "msa-api-trace-log",
-                    rollingOffsetMode: ROLLING_INDEX_MODE.DAILY,
-                    elasticsearchClientOptions: {
-                        node: configService.get("elasticsearch").url,
-                    },
-                }
-            },
-            inject: [ConfigService],
-        }),
     ],
     providers: [loggerAlias],
     exports: [Logger],

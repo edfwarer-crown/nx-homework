@@ -5,11 +5,10 @@ import * as bcrypt from "bcrypt"
 import {isEmail, isNotEmpty} from "class-validator"
 import phone from "phone"
 import validator from "validator"
+import {PrismaService} from "../../../../libs/entity/src/prisma.service";
+import {UpdateUserDto, UserEntity} from "../../../../libs/entity/src/prisma";
+import {UpdateUserProfileDto} from "../../../../libs/dto/src/request/update-user-profile.dto";
 
-import {UpdateUserProfileDto} from "@libs/dto/request/update-user-profile.dto"
-import {UpdateUserDto} from "@libs/entity/prisma/user/dto/update-user.dto"
-import {UserEntity} from "@libs/entity/prisma/user/entities/user.entity"
-import {PrismaService} from "@libs/entity/prisma.service"
 
 @Injectable()
 export class UserService {

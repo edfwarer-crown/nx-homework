@@ -1,6 +1,6 @@
 import {ApiProperty} from "@nestjs/swagger"
+import {TermOfServiceType} from "../enums";
 
-import {AccountType, TermOfServiceType} from "@libs/dto/enums"
 
 export class SignUpFormDto {
     @ApiProperty({
@@ -91,7 +91,6 @@ export class SignUpFormDto {
     @ApiProperty({
         required: false,
         example: "USER",
-        enum: AccountType,
         description: "계정 유형",
     })
     accountType: string

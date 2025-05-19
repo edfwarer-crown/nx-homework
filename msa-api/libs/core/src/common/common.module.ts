@@ -1,9 +1,9 @@
 import {forwardRef, Module} from "@nestjs/common"
 import {ConfigService} from "@nestjs/config"
 import {CashifyModule} from "nestjs-cashify"
+import {CashifyConfigService} from "./service/cashify-config.service";
+import {PrismaModule} from "../modules/prisma.module";
 
-import {CashifyConfigService} from "@libs/core/common/service/cashify-config.service"
-import {PrismaModule} from "@libs/core/modules/prisma.module"
 
 @Module({
     imports: [

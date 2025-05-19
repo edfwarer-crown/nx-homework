@@ -2,7 +2,6 @@ import {Module} from "@nestjs/common"
 import {ConfigModule, ConfigService} from "@nestjs/config"
 import {ClientOptions, ClientsModule} from "@nestjs/microservices"
 import {ClientsProviderAsyncOptions} from "@nestjs/microservices/module/interfaces/clients-module.interface"
-import {clientsModuleConfig} from "../config";
 
 
 @Module({
@@ -10,7 +9,7 @@ import {clientsModuleConfig} from "../config";
         ClientsModule.registerAsync({
             clients: [
                 {
-                    imports: [ConfigModule.forFeature(clientsModuleConfig)],
+                    imports: [],
                     inject: [ConfigService],
                     name: "MICRO_SERVICE",
                     useFactory: (configService: ConfigService) => {

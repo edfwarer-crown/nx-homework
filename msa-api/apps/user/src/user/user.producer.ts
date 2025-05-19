@@ -1,10 +1,8 @@
 import {Controller} from "@nestjs/common"
 import {MessagePattern, Payload} from "@nestjs/microservices"
+import {UserService} from "./user.service";
+import {UpdateUserDto, UserDto} from "../../../../libs/entity/src/prisma";
 
-import {UserService} from "@apps/user/user/user.service"
-import {RoleDto} from "@libs/entity/prisma/role/dto/role.dto"
-import {UpdateUserDto} from "@libs/entity/prisma/user/dto/update-user.dto"
-import {UserDto} from "@libs/entity/prisma/user/dto/user.dto"
 
 @Controller()
 export class UserProducer {

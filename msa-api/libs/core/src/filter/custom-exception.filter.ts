@@ -5,8 +5,8 @@ import {BaseExceptionFilter} from "@nestjs/core"
 import {IncomingWebhook} from "@slack/webhook"
 import {FastifyReply, FastifyRequest} from "fastify"
 
-import {customException, emptyIsNull, fromHttpException, ResponseMetadata} from "@libs/utils"
-import {isNotLocal} from "@libs/utils/node-env"
+import {isNotLocal} from "../../../utils/src/node-env";
+import {customException, emptyIsNull, fromHttpException, ResponseMetadata} from "../../../utils/src";
 
 @Injectable({scope: Scope.REQUEST})
 @Catch()

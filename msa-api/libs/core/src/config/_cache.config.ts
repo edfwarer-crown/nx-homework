@@ -1,6 +1,6 @@
 import {registerAs} from "@nestjs/config"
+import {CacheConfig} from "./config.type";
 
-import {CacheConfig} from "@libs/core/config/config.type"
 
 export default registerAs(
     "cacheConfig",
