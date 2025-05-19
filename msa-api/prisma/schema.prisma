@@ -133,6 +133,8 @@ model Event {
   type            String
   retailStart     DateTime? @map("retail_start")
   retailEnd       DateTime? @map("retail_end")
+  title           String    @map("title")
+  content         String    @map("content")
   enabled         Boolean   @default(true)
   createdBy       String?   @map("created_by")
   lastModifiedBy  String?   @map("last_modified_by")
@@ -144,11 +146,12 @@ model Event {
   @@map("events")
 }
 
-//보상
+// 보상
 model Compensation {
   id              String    @id @default(auto()) @map("_id") @db.ObjectId
   isRewarded      Boolean   @default(false)
   rewardDate      DateTime? @map("reward_date")
+  rewardUserId    String    @map("reward_user_id")
   status          String    @map("status")
   createdBy       String?   @map("created_by")
   lastModifiedBy  String?   @map("last_modified_by")
